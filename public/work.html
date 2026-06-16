@@ -1,1 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Work Reward</title>
+</head>
+<body>
+    <h2>Watch the ad to earn 10 coins</h2>
 
+    <div id="ad">
+        <p>Ad playing... 10 seconds</p>
+    </div>
+
+    <button id="confirm" disabled>Confirm Reward</button>
+
+    <script>
+        const url = new URL(window.location.href);
+        const uid = url.searchParams.get("uid");
+
+        // Pub de 10 secondes
+        setTimeout(() => {
+            document.getElementById("confirm").disabled = false;
+        }, 10000);
+
+        document.getElementById("confirm").onclick = () => {
+            fetch("https://ton-api.com/work/confirm", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ userId: uid })
+            })
+            .then(res => res.text())
+            .then(msg => alert(msg));
+        };
+    </script>
+</body>
+</html>
