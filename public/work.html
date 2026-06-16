@@ -1,47 +1,86 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Work Reward</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Watch Ad to Earn Coins</title>
+<style>
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+        color: #fff;
+        font-family: 'Segoe UI', Arial, sans-serif;
+    }
+    .container {
+        text-align: center;
+        background: rgba(255, 255, 255, 0.1);
+        padding: 30px 40px;
+        border-radius: 15px;
+        box-shadow: 0 0 20px rgba(0,0,0,0.3);
+    }
+    h1 {
+        margin-bottom: 10px;
+        font-size: 28px;
+    }
+    p {
+        margin-bottom: 20px;
+        font-size: 16px;
+    }
+    iframe {
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    }
+    #confirmBtn {
+        display: none;
+        margin-top: 20px;
+        padding: 10px 20px;
+        font-size: 16px;
+        font-weight: bold;
+        color: #fff;
+        background: #00b09b;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+    #confirmBtn:hover {
+        background: #96c93d;
+    }
+</style>
 </head>
 <body>
-    <h2>Watch the ad to earn 10 coins</h2>
-
-    <div class="container">
+<div class="container">
     <h1>Watch an Ad</h1>
     <p>Watch the ad below to receive your reward.</p>
-
-   <div id="ad-container">
-    <iframe width="350" height="200"
-        src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&controls=0"
-        style="border-radius:10px; border:none;">
-    </iframe>
+    <div id="ad-container">
+        <iframe width="350" height="200"
+            src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&controls=0"
+            allow="autoplay"
+            frameborder="0">
+        </iframe>
+    </div>
+    <button id="confirmBtn">Confirm Reward</button>
 </div>
 
+<script>
+    setTimeout(() => {
+        document.getElementById("confirmBtn").style.display = "inline-block";
+    }, 10000);
 
-    <button id="confirmBtn" style="display:none;">Confirm Reward</button>
-</div>
-
-
-    <button id="confirm" disabled>Confirm Reward</button>
-
-    <script>
-        const url = new URL(window.location.href);
-        const uid = url.searchParams.get("uid");
-
-        // Pub de 10 secondes
-        setTimeout(() => {
-            document.getElementById("confirm").disabled = false;
-        }, 10000);
-
-        document.getElementById("confirm").onclick = () => {
-            fetch("https://ton-api.com/work/confirm", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ userId: uid })
-            })
-            .then(res => res.text())
-            .then(msg => alert(msg));
-        };
-    </script>
+    document.getElementById("confirmBtn").onclick = () => {
+        const userId = new URLSearchParams(window.location.search).get("uid");
+        fetch("/api/work-confirm", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ userId })
+        })
+        .then(res => res.text())
+        .then(msg => alert("Reward granted!"));
+    };
+</script>
 </body>
 </html>
