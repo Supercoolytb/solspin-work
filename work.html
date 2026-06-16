@@ -7,7 +7,7 @@
     <h2>Watch the ad to earn 10 coins</h2>
 
     <div id="ad">
-        <p>Ad playing... 30 seconds</p>
+        <p>Ad playing... 10 seconds</p>
     </div>
 
     <button id="confirm" disabled>Confirm Reward</button>
@@ -16,7 +16,7 @@
         const url = new URL(window.location.href);
         const uid = url.searchParams.get("uid");
 
-        // Pub de 30 secondes
+        // Pub de 10 secondes
         setTimeout(() => {
             document.getElementById("confirm").disabled = false;
         }, 10000);
