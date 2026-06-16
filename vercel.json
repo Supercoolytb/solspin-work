@@ -4,6 +4,7 @@
     { "src": "api/**/*.js", "use": "@vercel/node" }
   ],
   "routes": [
+    { "src": "/", "status": 308, "headers": { "Location": "/work.html" } },
     { "src": "/(.*)", "dest": "/public/$1" }
   ]
 }
